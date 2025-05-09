@@ -1,2 +1,3 @@
 cd backend && npm run test
 echo -e "\033[0;32mPre-push прошел успешно!\033[0m"
+echo
