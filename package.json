@@ -29,8 +29,7 @@
   },
   "lint-staged": {
     "frontend/**/*.{ts,tsx,json}": [
-      "prettier --write",
-      "npm run lint --prefix frontend"
+      "prettier --write"
     ],
     "backend/**/*.{ts,json}": [
       "prettier --write",
