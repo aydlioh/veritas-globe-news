@@ -13,7 +13,12 @@ export const DeleteNewsButton = ({ newsId }: DeleteNewsButtonProps) => {
   };
 
   return (
-    <Button variant="ghost" size="icon" onClick={handleDelete} className="p-1 ">
+    <Button
+      variant="ghost"
+      size="iconsm"
+      onClick={handleDelete}
+      className="p-1 "
+    >
       <Trash2 />
     </Button>
   );

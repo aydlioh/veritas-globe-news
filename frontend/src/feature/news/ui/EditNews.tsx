@@ -17,7 +17,7 @@ export const EditNewsButton = ({ newsId }: EditNewsButtonProps) => {
   };
 
   return (
-    <Button variant="ghost" size="icon" onClick={handleEdit} className="p-1">
+    <Button variant="ghost" size="iconsm" onClick={handleEdit} className="p-1">
       <Pencil />
     </Button>
   );

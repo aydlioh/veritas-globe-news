@@ -12,7 +12,7 @@ export const CreateNews = () => {
     <Link
       href="/create-news"
       onClick={handleClick}
-      className="animation flex justify-center items-center min-h-[240px] w-full rounded-[16px] border border-dashed border-graphite/20 bg-white"
+      className="animation flex justify-center items-center min-h-[240px] w-[320px] rounded-[16px] border border-dashed border-graphite/20 bg-white"
     >
       <div className="flex flex-col justify-center h-full gap-4">
         <Newspaper className="h-20 w-20 mx-auto" />

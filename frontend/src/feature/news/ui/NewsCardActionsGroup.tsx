@@ -1,7 +1,7 @@
 'use client';
 
-import { DeleteNewsButton } from './DeleteNewsButton';
-import { EditNewsButton } from './EditNewsButton';
+import { DeleteNewsButton } from './DeleteNews';
+import { EditNewsButton } from './EditNews';
 
 interface NewsCardActionsGroupProps {
   newsId: string;
@@ -9,9 +9,9 @@ interface NewsCardActionsGroupProps {
 
 export const NewsCardActionsGroup = ({ newsId }: NewsCardActionsGroupProps) => {
   return (
-    <div className="flex flex-row gap-0 bg-white rounded-md">
-      <EditNewsButton newsId={newsId} />
+    <div className="flex flex-row gap-0 bg-gray-50 rounded-md">
       <DeleteNewsButton newsId={newsId} />
+      <EditNewsButton newsId={newsId} />
     </div>
   );
 };
