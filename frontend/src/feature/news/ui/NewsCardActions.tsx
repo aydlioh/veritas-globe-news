@@ -14,7 +14,7 @@ export const NewsCardActions = ({ news, actionSlot }: NewsCardActionsProps) => {
   };
 
   return (
-    <div onClick={handleClick} className="cursor-pointer">
+    <div onClick={handleClick}>
       <NewsCard news={news} actionSlot={actionSlot} />
     </div>
   );
