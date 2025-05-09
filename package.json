@@ -1,0 +1,31 @@
+{
+  "name": "veritas-globe",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start:dev": "docker compose -f .\\docker-compose.dev.yml up",
+    "start:prod": "docker compose -f .\\docker-compose.prod.yml up",
+    "prepare": "husky"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "husky": "^9.1.7",
+    "lint-staged": "^15.5.2",
+    "prettier": "^3.5.3"
+  },
+  "lint-staged": {
+    "frontend/**/*.{ts,tsx,json}": [
+      "prettier --write",
+      "npm run lint --prefix frontend",
+      "git add"
+    ],
+    "backend/**/*.{ts,json}": [
+      "prettier --write",
+      "npm run lint --prefix backend",
+      "git add"
+    ]
+  }
+}
