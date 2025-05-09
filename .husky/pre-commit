@@ -1,1 +1,2 @@
 npm run precommit
+echo -e "\033[0;32mPre-commit прошел успешно!\033[0m"
