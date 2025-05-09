@@ -1,0 +1,78 @@
+# Общие системные и IDE файлы
+.DS_Store
+.idea/
+.vscode/
+*.log
+*.swp
+*.swo
+.env.local
+.env.development
+.env.production
+.env.test
+
+# ----------------------------
+# Frontend (Next.js)
+# ----------------------------
+.next/
+out/
+dist/
+node_modules/
+/.cache/
+/coverage/
+/.next/
+/cypress/downloads/
+/cypress/screenshots/
+/cypress/videos/
+
+# Next.js build cache
+.next/cache/
+
+# Зависимости и пакеты
+frontend/node_modules/  # Если фронтенд в подпапке /frontend
+pnpm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# ----------------------------
+# Backend (NestJS)
+# ----------------------------
+dist/
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+*.pid
+*.seed
+*.pid.lock
+
+# Локальные настройки и данные
+.env
+*.env
+*.env.*
+!.env.example
+
+# Директории для бэкенда
+backend/node_modules/    # Если бэкенд в подпапке /backend
+/uploads/
+/temp/
+/logs/
+
+# Кэш и временные файлы
+.cache/
+.tmp/
+dump.rdb
+
+# Тесты и покрытие
+coverage/
+.nyc_output/
+
+# ----------------------------
+# Дополнительно
+# ----------------------------
+# Файлы пакетных менеджеров
+package-lock.json
+yarn.lock
+pnpm-lock.yaml
+
+# Docker
+docker-compose.override.yml
