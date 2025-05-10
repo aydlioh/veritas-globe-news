@@ -1,7 +1,6 @@
 # Общие системные и IDE файлы
 .DS_Store
 .idea/
-.vscode/
 *.log
 *.swp
 *.swo

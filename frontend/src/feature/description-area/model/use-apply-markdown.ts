@@ -1,4 +1,4 @@
-import { useCallback } from "react";
+import { useCallback } from 'react';
 
 export const useApplyMarkdown = (
   description: string,
@@ -7,11 +7,11 @@ export const useApplyMarkdown = (
   const applyMarkdown = useCallback(
     (markdownType: string) => {
       const textarea = document.querySelector(
-        "textarea",
+        'textarea',
       ) as HTMLTextAreaElement | null;
 
       if (!textarea) {
-        console.error("Textarea not found");
+        console.error('Textarea not found');
         return;
       }
 
@@ -27,8 +27,8 @@ export const useApplyMarkdown = (
       let newEnd = end;
 
       switch (markdownType) {
-        case "Bold":
-          if (selectedText.startsWith("**") && selectedText.endsWith("**")) {
+        case 'Bold':
+          if (selectedText.startsWith('**') && selectedText.endsWith('**')) {
             newText = selectedText.slice(2, -2);
             newStart = start;
             newEnd = end - 4;
@@ -39,8 +39,8 @@ export const useApplyMarkdown = (
           }
           break;
 
-        case "Header":
-          if (selectedText.startsWith("### ")) {
+        case 'Header':
+          if (selectedText.startsWith('### ')) {
             newText = selectedText.slice(4);
             newStart = start;
             newEnd = end - 4;
@@ -51,8 +51,8 @@ export const useApplyMarkdown = (
           }
           break;
 
-        case "Italic":
-          if (selectedText.startsWith("*") && selectedText.endsWith("*")) {
+        case 'Italic':
+          if (selectedText.startsWith('*') && selectedText.endsWith('*')) {
             newText = selectedText.slice(1, -1);
             newStart = start;
             newEnd = end - 2;
@@ -63,7 +63,7 @@ export const useApplyMarkdown = (
           }
           break;
 
-        case "Link": {
+        case 'Link': {
           const linkRegex = /^\[(.*?)\]\((.*?)\)$/;
           const match = selectedText.match(linkRegex);
 
@@ -74,7 +74,7 @@ export const useApplyMarkdown = (
             newStart = start;
             newEnd = start + linkText.length;
           } else {
-            const placeholderUrl = "url";
+            const placeholderUrl = 'url';
             newText = `[${selectedText}](${placeholderUrl})`;
             newStart = start;
             newEnd = start + newText.length;
@@ -82,47 +82,47 @@ export const useApplyMarkdown = (
           break;
         }
 
-        case "OrderList": {
-          const lines = selectedText.split("\n");
+        case 'OrderList': {
+          const lines = selectedText.split('\n');
           const hasOrderList = lines.some((line) => /^\d+\.\s/.test(line));
 
           if (hasOrderList) {
             newText = lines
               .map((line) =>
                 /^\d+\.\s/.test(line)
-                  ? line.replace(/^\d+\.\s/, "").trim()
+                  ? line.replace(/^\d+\.\s/, '').trim()
                   : line.trim(),
               )
-              .join("\n");
+              .join('\n');
           } else {
             let counter = 1;
             newText = lines
               .map((line) =>
-                line.trim() ? `${counter++}. ${line.trim()}` : "",
+                line.trim() ? `${counter++}. ${line.trim()}` : '',
               )
-              .join("\n");
+              .join('\n');
           }
           newStart = start;
           newEnd = start + newText.length;
           break;
         }
 
-        case "UnorderedList": {
-          const lines = selectedText.split("\n");
+        case 'UnorderedList': {
+          const lines = selectedText.split('\n');
           const hasUnorderedList = lines.every(
-            (line) => line.trim() === "" || line.startsWith("- "),
+            (line) => line.trim() === '' || line.startsWith('- '),
           );
 
           if (hasUnorderedList) {
             newText = lines
               .map((line) =>
-                line.trim().startsWith("- ") ? line.slice(2) : line,
+                line.trim().startsWith('- ') ? line.slice(2) : line,
               )
-              .join("\n");
+              .join('\n');
           } else {
             newText = lines
-              .map((line) => (line.trim() ? `- ${line.trim()}` : ""))
-              .join("\n");
+              .map((line) => (line.trim() ? `- ${line.trim()}` : ''))
+              .join('\n');
           }
           newStart = start;
           newEnd = start + newText.length;
