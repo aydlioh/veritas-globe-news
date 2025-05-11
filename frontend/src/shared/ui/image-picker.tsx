@@ -10,11 +10,15 @@ type ImagePickerProps = {
   blockKey: string;
   className?: string;
   aspectRatio?: string;
+  text?: string;
 };
 
-export const ImagePicker = ({ blockKey, className }: ImagePickerProps) => {
+export const ImagePicker = ({
+  blockKey,
+  className,
+  text,
+}: ImagePickerProps) => {
   const updateBlock = useSetAtom(updateImageBlockAtom);
-  // const clearBlock = useSetAtom(clearImageBlockAtom);
 
   const { getRootProps, getInputProps, isDragActive } = useDropzone({
     accept: { 'image/*': ['.png', '.jpg', '.jpeg', '.webp'] },
@@ -30,17 +34,21 @@ export const ImagePicker = ({ blockKey, className }: ImagePickerProps) => {
     <div
       {...getRootProps()}
       className={cn(
-        'border-2 border-dashed rounded-lg p-8 text-center cursor-pointer transition-colors',
-        isDragActive ? 'border-primary/40 bg-primary/0' : 'border-muted',
+        'border-1 border-dashed rounded-lg p-4 text-center cursor-pointer transition-colors',
+        isDragActive ? 'border-graphite/40 bg-primary/0' : 'border-graphite/20',
         className,
       )}
     >
       <input {...getInputProps()} />
-      <div className="flex flex-col items-center gap-2">
-        <Upload className="w-8 h-8 text-muted-foreground" />
-        <p className="font-medium">
-          {isDragActive ? 'Отпустите изображение' : 'Перетащите или нажмите'}
-        </p>
+      <div className="flex flex-col items-center gap-2 h-full">
+        <div className="my-auto flex flex-row items-center gap-2">
+          <Upload className="w-6 h-6 text-muted-foreground" />
+          <p className="font-medium">
+            {isDragActive
+              ? 'Отпустите изображение'
+              : text || 'Перетащите или нажмите'}
+          </p>
+        </div>
       </div>
     </div>
   );

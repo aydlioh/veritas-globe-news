@@ -29,3 +29,13 @@ export const clearImageBlockAtom = atom(null, (get, set, blockKey: string) => {
   delete blocks[blockKey];
   set(imageBlocksAtom, blocks);
 });
+
+export const updateImageBlockUrlAtom = atom(
+  null,
+  (get, set, { blockKey, url }: { blockKey: string; url: string }) => {
+    set(imageBlocksAtom, {
+      ...get(imageBlocksAtom),
+      [blockKey]: { id: blockKey, url },
+    });
+  },
+);

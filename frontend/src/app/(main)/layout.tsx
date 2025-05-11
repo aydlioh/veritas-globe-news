@@ -1,7 +1,17 @@
+'use client';
+
 import { Footer } from '@/widgets/footer/ui/Footer';
 import { Header } from '@/widgets/header/ui/Header';
 
+import { usePathname } from 'next/navigation';
+
 export default function Layout({ children }: { children: React.ReactNode }) {
+  const pathname = usePathname();
+  const isNoLayout = pathname.includes('/edit-news');
+  if (isNoLayout) {
+    return <>{children}</>; // без layout
+  }
+
   return (
     <div className="min-h-screen flex flex-col ">
       <Header />

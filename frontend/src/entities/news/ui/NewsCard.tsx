@@ -2,7 +2,7 @@
 
 import Image from 'next/image';
 import { INews } from '../model/types';
-import fallbackImage from '@/shared/assets/Logo.svg';
+import fallbackImage from '@/shared/assets/Logo1.png';
 import ReactMarkdown from 'react-markdown';
 import { ImagePreview } from '@/shared/ui/image-preview';
 
@@ -14,27 +14,25 @@ interface ShopCardProps {
 
 export const NewsCard = ({ news, image, actionSlot }: ShopCardProps) => {
   return (
-    <div className="cursor-pointer relative p-4 w-[320px] bg-base rounded-xl overflow-hidden flex flex-col justify-between gap-4 h-full">
+    <div className="cursor-pointer relative p-4 w-[320px] min-h-[92px] bg-base rounded-xl overflow-hidden flex flex-col justify-between gap-4 h-full">
       <div className="flex flex-col gap-4">
-        {!image ? (
-          news.image && (
-            <div className=" w-[288px]">
-              <Image
-                src={news.image || fallbackImage}
-                alt={news.name || 'News image'}
-                width={400}
-                height={225}
-                className="rounded-md w-full h-auto"
-                unoptimized={true}
-              />
-            </div>
-          )
-        ) : (
+        {image ? (
           <ImagePreview
             blockKey={image}
-            className="h-full"
+            className="rounded-md"
             height={'w-[288px]'}
           />
+        ) : (
+          news.image && (
+            <Image
+              src={news.image || fallbackImage}
+              alt={news.name || 'News image'}
+              width={288}
+              height={225}
+              className="rounded-md"
+              unoptimized={true}
+            />
+          )
         )}
 
         <div className="prose text-[16px]">
