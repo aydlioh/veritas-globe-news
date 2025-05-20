@@ -1,0 +1,39 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("POSTGRES_URI")
+}
+
+model User {
+  id        String     @id @default(uuid())
+  email     String     @unique
+  password  String
+  username  String     @unique
+  role      Role       @default(USER)
+  posts     NewsPost[] @relation("user_posts")
+  createdAt DateTime   @default(now()) @map("created_at")
+  updatedAt DateTime   @updatedAt @map("updated_at")
+
+  @@map("users")
+}
+
+model NewsPost {
+  id         String   @id @default(uuid())
+  title      String
+  content    String
+  previewUrl String?  @map("preview_url")
+  createdAt  DateTime @default(now()) @map("created_at")
+  updatedAt  DateTime @updatedAt @map("updated_at")
+  author     User     @relation("user_posts", fields: [authorId], references: [id])
+  authorId   String   @map("author_id")
+
+  @@map("news")
+}
+
+enum Role {
+  USER
+  ADMIN
+}
