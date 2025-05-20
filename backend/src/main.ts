@@ -7,7 +7,10 @@ import { setupSwagger } from './common/utils/swagger.utils';
 async function bootstrap() {
   const app = await NestFactory.create(AppModule, { cors: true });
 
-  app.use(cookieParser()).useGlobalPipes(new ValidationPipe());
+  app
+    .setGlobalPrefix('api')
+    .use(cookieParser())
+    .useGlobalPipes(new ValidationPipe());
 
   setupSwagger(app);
 

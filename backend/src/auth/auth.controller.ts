@@ -19,6 +19,7 @@ import {
   ApiNotFoundResponse,
   ApiOkResponse,
   ApiOperation,
+  ApiTags,
 } from '@nestjs/swagger';
 import { AuthResponse } from './dto/auth.dto';
 import { Authorization } from './decorators/authorization.decorator';
@@ -26,6 +27,7 @@ import { Authorized } from './decorators/authorized.decorator';
 import { User } from '@prisma/client';
 import { UserResponseDto } from './dto/user.dto';
 
+@ApiTags('Авторизация')
 @Controller('auth')
 export class AuthController {
   constructor(private readonly authService: AuthService) {}
