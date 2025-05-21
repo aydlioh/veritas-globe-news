@@ -18,17 +18,34 @@ CMD ["npm", "run", "build"]
 ###################
 
 
-FROM node:20 As production
+# ==================== Стадия сборки ====================
+FROM node:20  AS builder
 
 WORKDIR /app
 
+# Копируем зависимости и собираем проект
 COPY package*.json ./
-COPY prisma ./prisma/
+COPY tsconfig*.json ./
+COPY src/ ./src/
 
-RUN npm ci
+# Устанавливаем зависимости и собираем
+RUN npm ci && npm run build
 
-COPY . .
+# ==================== Финальная стадия ====================
+FROM node:20  AS production
 
-RUN npm run build
+WORKDIR /app
 
-CMD ["npm", "run", "start:prod"]
+# Копируем только нужные файлы
+COPY --from=builder /app/package*.json ./
+COPY --from=builder /app/node_modules/ ./node_modules/
+COPY --from=builder /app/dist/ ./dist/
+
+# Опционально: копируем .env (лучше передавать через Docker Secrets или -e)
+# COPY .env ./
+
+# Запускаем приложение
+CMD ["node", "dist/main.js"]
+
+# Экспонируем порт (указываем тот, который используется в NestJS)
+EXPOSE 3000

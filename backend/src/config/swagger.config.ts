@@ -2,10 +2,10 @@ import { DocumentBuilder } from '@nestjs/swagger';
 
 export const getSwaggerConfig = () => {
   return new DocumentBuilder()
-    .setTitle('NestJS API')
-    .setDescription('Documentation')
+    .setTitle('Veritas Globe News API')
+    .setDescription('Документация к API Veritas Globe News бэкенда')
     .setVersion('1.0')
-    .setContact('Teacoder', 'https://github.com/teacoder', '2yH8t@example.com')
+    .setContact('aydlioh', 'https://github.com/aydlioh/veritas-globe-news', '')
     .addBearerAuth()
     .build();
 };
