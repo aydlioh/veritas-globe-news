@@ -1,3 +1,22 @@
-export default async function Page() {
-  return <div>Главная страница</div>;
+'use client';
+
+import { useEffect } from 'react';
+
+const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL;
+
+export default function Page() {
+  useEffect(() => {
+    async function fetchData() {
+      const response = await fetch(`${API_BASE_URL}/ping`);
+      const data = await response.json();
+      console.log(data);
+    }
+    fetchData();
+  }, []);
+
+  return (
+    <div>
+      <h1>Главная страница</h1>
+    </div>
+  );
 }
