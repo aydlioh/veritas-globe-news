@@ -37,8 +37,6 @@ services:
       STORAGE_ENDPOINT: ${STORAGE_ENDPOINT}
     ports:
       - '${BACKEND_PORT}:${BACKEND_PORT}'
-    depends_on:
-      - postgres
     networks:
       - app-network
     restart: unless-stopped
