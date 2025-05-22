@@ -4,6 +4,7 @@ import { CreateNewsDto } from './dto/create-news.dto';
 import { UpdateNewsDto } from './dto/update-news.dto';
 import { NewsResponseDto } from './dto/news.dto';
 import { FullNewsResponseDto } from './dto/full-news.dto';
+import { StorageService } from 'src/storage/storage.service';
 
 const withUser = {
   author: {
@@ -17,7 +18,10 @@ const withUser = {
 
 @Injectable()
 export class NewsService {
-  constructor(private readonly prisma: PrismaService) {}
+  constructor(
+    private readonly prisma: PrismaService,
+    private readonly storageService: StorageService,
+  ) {}
 
   public async getById(id: string): Promise<FullNewsResponseDto> {
     const post = await this.prisma.newsPost.findUnique({
@@ -49,13 +53,20 @@ export class NewsService {
   public async create(
     dto: CreateNewsDto,
     authorId: string,
+    previewFile?: Express.Multer.File,
   ): Promise<FullNewsResponseDto> {
-    const { title, content } = dto;
+    let previewUrl: string | undefined;
+
+    if (previewFile) {
+      const filePath = `previews/${Date.now()}-${previewFile.originalname}`;
+      previewUrl = await this.storageService.uploadFile(previewFile, filePath);
+    }
 
     return this.prisma.newsPost.create({
       data: {
-        title,
-        content,
+        title: dto.title,
+        content: dto.content,
+        previewUrl,
         authorId,
       },
       include: withUser,
@@ -66,13 +77,26 @@ export class NewsService {
     id: string,
     dto: UpdateNewsDto,
     authorId: string,
+    previewFile?: Express.Multer.File,
   ): Promise<FullNewsResponseDto> {
-    await this.getById(id);
+    const news = await this.getById(id);
+    let previewUrl = news.previewUrl;
+
+    if (previewFile) {
+      if (previewUrl) {
+        await this.storageService.deleteFile(previewUrl);
+      }
+
+      const filePath = `previews/${Date.now()}-${previewFile.originalname}`;
+      previewUrl = await this.storageService.uploadFile(previewFile, filePath);
+    }
 
     return this.prisma.newsPost.update({
       where: { id },
       data: {
-        ...dto,
+        title: dto.title,
+        content: dto.content,
+        previewUrl,
         authorId,
       },
       include: withUser,
@@ -81,7 +105,11 @@ export class NewsService {
 
   public async delete(id: string): Promise<boolean> {
     try {
-      await this.getById(id);
+      const news = await this.getById(id);
+
+      if (news.previewUrl) {
+        await this.storageService.deleteFile(news.previewUrl);
+      }
 
       await this.prisma.newsPost.delete({
         where: { id },

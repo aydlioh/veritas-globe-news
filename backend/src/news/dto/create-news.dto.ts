@@ -1,5 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsNotEmpty, IsString, IsUrl } from 'class-validator';
+import { IsNotEmpty, IsString } from 'class-validator';
 
 export class CreateNewsDto {
   @ApiProperty({
@@ -19,10 +19,10 @@ export class CreateNewsDto {
   content: string;
 
   @ApiProperty({
-    example: 'https://example.com/preview.jpg',
-    description: 'URL для превью изображения',
+    type: 'string',
+    format: 'binary',
+    description: 'Файл превью новости',
     required: false,
   })
-  @IsUrl({}, { message: 'URL превью должен быть валидным URL' })
-  previewUrl?: string;
+  previewFile?: Express.Multer.File;
 }

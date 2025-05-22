@@ -10,5 +10,16 @@ export const setupSwagger = (app: INestApplication) => {
   SwaggerModule.setup('/docs', app, document, {
     yamlDocumentUrl: '/docs.yaml',
     jsonDocumentUrl: '/docs.json',
+    swaggerOptions: {
+      defaultModelExpandDepth: -1,
+      displayRequestDuration: true,
+      tryItOutEnabled: true,
+      requestInterceptor: (req: Request) => {
+        if (req.body && req.body instanceof FormData) {
+          req.headers['Content-Type'] = 'multipart/form-data';
+        }
+        return req;
+      },
+    },
   });
 };
