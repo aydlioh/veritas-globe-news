@@ -12,7 +12,7 @@ import { JwtService } from '@nestjs/jwt';
 import { JwtPayload } from './interfaces/jwt.interface';
 import { LoginDto } from './dto/login.dto';
 import { Request, Response } from 'express';
-import { isDev } from 'src/common/utils/is-dev.utils';
+// import { isDev } from 'src/common/utils/is-dev.utils';
 import { parseTokenDuration } from 'src/common/utils/parse-duration.utils';
 import { AuthResponse } from './dto/auth.dto';
 import { Tokens } from './interfaces/tokens.interface';
@@ -164,14 +164,14 @@ export class AuthService {
   }
 
   private setCookie(res: Response, cookie: string, expiresIn: Date) {
-    const isDevelopment = isDev(this.configService);
+    // const isDevelopment = isDev(this.configService);
 
     res.cookie(this.REFRESH_TOKEN_COOKIE_NAME, cookie, {
       httpOnly: true,
-      domain: this.COOKIE_DOMAIN,
+      // domain: this.COOKIE_DOMAIN,
       expires: expiresIn,
-      secure: !isDevelopment,
-      sameSite: isDevelopment ? 'none' : 'lax',
+      // secure: !isDevelopment,
+      // sameSite: isDevelopment ? 'none' : 'lax',
     });
   }
 }
