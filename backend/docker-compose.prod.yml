@@ -1,0 +1,66 @@
+version: '3.9'
+
+services:
+  backend:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: production
+    container_name: nest-backend
+    env_file:
+      - ./.env
+    environment:
+      POSTGRES_URI: ${POSTGRES_URI}
+      NODE_ENV: ${NODE_ENV}
+      COOKIE_DOMAIN: ${COOKIE_DOMAIN}
+      JWT_SECRET: ${JWT_SECRET}
+      JWT_ACCESS_TOKEN_TTL: ${JWT_ACCESS_TOKEN_TTL}
+      JWT_REFRESH_TOKEN_TTL: ${JWT_REFRESH_TOKEN_TTL}
+      STORAGE_ACCESS_KEY: ${STORAGE_ACCESS_KEY}
+      STORAGE_SECRET_KEY: ${STORAGE_SECRET_KEY}
+      STORAGE_BUCKET: ${STORAGE_BUCKET}
+      STORAGE_REGION: ${STORAGE_REGION}
+      STORAGE_ENDPOINT: ${STORAGE_ENDPOINT}
+    ports:
+      - '${BACKEND_PORT}:${BACKEND_PORT}'
+    networks:
+      - app-network
+    restart: unless-stopped
+
+  # minio:
+  #   image: minio/minio
+  #   container_name: minio
+  #   command: server /data --console-address ":9001" --address ":9000"
+  #   env_file:
+  #     - ./.env
+  #   environment:
+  #     MINIO_ROOT_USER: ${STORAGE_ACCESS_KEY}
+  #     MINIO_ROOT_PASSWORD: ${STORAGE_SECRET_KEY}
+  #   volumes:
+  #     - minio_data:/data
+  #   ports:
+  #     - '9000:9000' # S3 API
+  #     - '9001:9001' # Web UI
+  #   networks:
+  #     - app-network
+
+  # redis:
+  #   image: redis:7
+  #   container_name: redis
+  #   env_file:
+  #     - ./.env
+  #   volumes:
+  #     - redis_data:/data
+  #   ports:
+  #     - '6379:6379'
+  #   networks:
+  #     - app-network
+
+# volumes:
+#   postgres_data:
+#   minio_data:
+  # redis_data:
+
+networks:
+  app-network:
+    driver: bridge
