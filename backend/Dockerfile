@@ -30,7 +30,7 @@ COPY prisma ./prisma/
 COPY src/ ./src/
 
 # Устанавливаем зависимости и собираем
-RUN npm ci && npx prisma generate && npm run build
+RUN npm install && npx prisma generate && npm run build
 
 # ==================== Финальная стадия ====================
 FROM node:20-alpine  AS production
