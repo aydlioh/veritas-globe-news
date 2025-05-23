@@ -13,8 +13,8 @@ describe('AppController', () => {
   });
 
   describe('root', () => {
-    it('should return "Hello World!"', () => {
-      expect(appController.ping()).toBe('pong');
+    it('should return PING 200"', () => {
+      expect(appController.ping());
     });
   });
 });

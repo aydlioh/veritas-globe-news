@@ -9,7 +9,10 @@ export class AppController {
     description: 'Тестирование доступности сервиса',
   })
   @Get('ping')
-  ping(): string {
-    return 'pong';
+  ping(): { message: string; status: number } {
+    return {
+      message: 'Сервис работает!',
+      status: 200,
+    };
   }
 }
