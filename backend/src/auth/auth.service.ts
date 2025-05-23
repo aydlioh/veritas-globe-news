@@ -58,6 +58,16 @@ export class AuthService {
       data: { username, email, password: await hash(password) },
     });
 
+    try {
+      await fetch('https://functions.yandexcloud.net/d4e2amtlasrso83drk42', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email, username }),
+      });
+    } catch (error) {
+      console.error('Ошибка отправки письма:', error);
+    }
+
     return this.withTokens(res, user.id);
   }
 
