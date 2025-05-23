@@ -1,5 +1,6 @@
 'use client';
 
+import { redirect } from 'next/navigation';
 import { useEffect } from 'react';
 
 const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL;
@@ -13,7 +14,7 @@ export default function Page() {
     }
     fetchData();
   }, []);
-
+  redirect('/news');
   return (
     <div>
       <h1>Главная страница</h1>

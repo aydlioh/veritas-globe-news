@@ -1,38 +1,66 @@
 'use client';
 
-import { imageBlocksAtom } from '@/shared/lib/image-store';
-import { atom } from 'jotai';
-import { INewsForm } from './types';
-
-export interface INews {
-  id: string;
-  name: string;
-  description: string;
-  image: string;
-  date: string;
-}
+import { imageBlocksAtom } from '@/shared/lib/imageStore';
+import { atom, Getter, Setter } from 'jotai';
+import { INewsForm, INewsDetailsForm, INews, INewsDetails } from './types';
 
 export const newsTitleAtom = atom('');
-export const newsDescriptionAtom = atom('');
-export const newsImageAtom = atom((get) => {
+export const newsContentAtom = atom('');
+export const newsPreviewUrlAtom = atom((get) => {
   const imageBlocks = get(imageBlocksAtom);
   return imageBlocks['news-image-preview']?.url || '';
 });
-
-export const newsDateAtom = atom(() => {
-  const now = new Date();
-  return now.toLocaleDateString('ru-RU');
-});
+export const newsImageFileAtom = atom<File | null>(null);
 
 export const newsFormDataAtom = atom<INewsForm>((get) => ({
-  name: get(newsTitleAtom),
-  description: get(newsDescriptionAtom),
-  image: get(newsImageAtom),
-  date: get(newsDateAtom),
+  title: get(newsTitleAtom),
+  previewUrl: get(newsPreviewUrlAtom),
+  createdAt: new Date().toISOString(),
+  updatedAt: new Date().toISOString(),
+  authorId: '',
 }));
 
-export const submitNewsAtom = atom(null, (get) => {
-  const formData = get(newsFormDataAtom);
-  console.log('Данные новости:', formData);
+export const newsDetailsFormDataAtom = atom<INewsDetailsForm>((get) => ({
+  title: get(newsTitleAtom),
+  content: get(newsContentAtom),
+  previewUrl: get(newsPreviewUrlAtom),
+  createdAt: new Date().toISOString(),
+  updatedAt: new Date().toISOString(),
+  authorId: '',
+  author: {
+    id: '',
+    username: '',
+    email: '',
+  },
+}));
+
+export const submitNewsAtom = atom(null, (get, set, isDetailed: boolean) => {
+  const formData = isDetailed
+    ? get(newsDetailsFormDataAtom)
+    : get(newsFormDataAtom);
+  console.log('данные новости:', formData);
   return formData;
 });
+
+export const resetNewsFormAtom = atom(null, (_, set) => {
+  set(newsTitleAtom, '');
+  set(newsContentAtom, '');
+});
+
+export const loadNewsDataAtom = atom(
+  null,
+  (get: Getter, set: Setter, data: INews | INewsDetails) => {
+    set(newsTitleAtom, data.title);
+    set(imageBlocksAtom, (prev) => ({
+      ...prev,
+      ['news-image-preview']: {
+        ...prev['news-image-preview'],
+        url: data.previewUrl,
+      },
+    }));
+
+    if ('content' in data) {
+      set(newsContentAtom, (data as INewsDetails).content);
+    }
+  },
+);

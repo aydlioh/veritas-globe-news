@@ -4,7 +4,7 @@ import { useSetAtom } from 'jotai';
 import { useDropzone } from 'react-dropzone';
 import { Upload } from 'lucide-react';
 import { cn } from '@/shared/lib/utils';
-import { updateImageBlockAtom } from '../lib/image-store';
+import { updateImageBlockAtom } from '../lib/imageStore';
 
 type ImagePickerProps = {
   blockKey: string;

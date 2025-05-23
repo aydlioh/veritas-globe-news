@@ -9,7 +9,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
   const isNoLayout = pathname.includes('/edit-news');
   if (isNoLayout) {
-    return <>{children}</>; // без layout
+    return <>{children}</>;
   }
 
   return (

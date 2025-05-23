@@ -2,7 +2,7 @@
 
 import Image from 'next/image';
 import { useAtomValue, useSetAtom } from 'jotai';
-import { imageBlocksAtom, clearImageBlockAtom } from '../lib/image-store';
+import { imageBlocksAtom, clearImageBlockAtom } from '../lib/imageStore';
 import { X } from 'lucide-react';
 
 type ImagePreviewProps = {
@@ -26,7 +26,7 @@ export const ImagePreview = ({
     e.stopPropagation();
     clearImage(blockKey);
   };
-  if (!block || block.url.length == 0) return null;
+  if (!block?.url) return null;
 
   return (
     <div className={`relative ${height} group`}>

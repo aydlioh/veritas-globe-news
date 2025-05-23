@@ -4,7 +4,7 @@ export const Footer = () => {
       <footer className="mt-auto">
         <div className="h-px w-full bg-graphite/10 mb-3"></div>
         <span className="text-sm text-graphite/30">
-          © YNews, {new Date().getFullYear()}
+          © Veritas Globe, {new Date().getFullYear()}
         </span>
       </footer>
     </div>

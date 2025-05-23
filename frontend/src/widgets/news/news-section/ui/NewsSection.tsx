@@ -1,6 +1,6 @@
 'use client';
 
-import NewsList from '@/feature/news/news-list/ui/NewsList';
+import { NewsList } from '@/feature/news';
 
 export default function NewsSection() {
   return (

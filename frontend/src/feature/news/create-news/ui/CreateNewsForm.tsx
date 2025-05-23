@@ -1,11 +1,11 @@
 'use client';
 
-import { useCreateNews } from '../model/useCreateNews';
 import { NewsTitleInput } from './NewsTitleInput';
 import { NewsImagePicker } from './NewsImagePicker';
 import { NewsPreviewCard } from './NewsPreviewCard';
-import { NewsDescriptionEditor } from './NewsDescriptionEditor';
+import { NewsContentEditor } from './NewsContentEditor'; // новое название компонента
 import { NewsSubmitButton } from './NewsSubmitButton';
+import { useManageNews } from '../model/useManageNews';
 
 interface Props {
   newsId?: string;
@@ -15,13 +15,13 @@ export function CreateNewsForm({ newsId }: Props) {
   const {
     title,
     setTitle,
-    description,
-    setDescription,
+    content,
+    setContent,
     news,
     submitNews,
     isSubmitting,
     isValid,
-  } = useCreateNews(newsId);
+  } = useManageNews(newsId);
 
   if (isSubmitting) {
     return <p className="text-muted">Загрузка новости...</p>;
@@ -34,9 +34,9 @@ export function CreateNewsForm({ newsId }: Props) {
           <NewsTitleInput value={title} onChange={setTitle} />
           <NewsImagePicker />
         </div>
-        <NewsPreviewCard news={{ ...news, id: '0' }} />
+        <NewsPreviewCard news={{ ...news, id: news.id ?? '0' }} />
       </div>
-      <NewsDescriptionEditor value={description} onChange={setDescription} />
+      <NewsContentEditor value={content} onChange={setContent} />
       <NewsSubmitButton
         onSubmit={submitNews}
         isEdit={!!newsId}

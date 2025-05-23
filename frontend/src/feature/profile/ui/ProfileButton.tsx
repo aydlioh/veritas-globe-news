@@ -8,7 +8,7 @@ export const ProfileButton = () => {
   const { router } = useAppRouter();
 
   const handleClick = () => {
-    router.push('/login');
+    router.push('/auth-select');
   };
 
   return (

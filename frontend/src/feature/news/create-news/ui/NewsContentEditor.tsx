@@ -5,6 +5,6 @@ interface Props {
   onChange: (value: string) => void;
 }
 
-export function NewsDescriptionEditor({ value, onChange }: Props) {
+export function NewsContentEditor({ value, onChange }: Props) {
   return <DescriptionArea description={value} setDescription={onChange} />;
 }

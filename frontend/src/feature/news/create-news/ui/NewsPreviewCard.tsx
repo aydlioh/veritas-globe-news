@@ -9,7 +9,7 @@ export function NewsPreviewCard({ news }: Props) {
   return (
     <div className="flex flex-col gap-4 w-[320px]">
       <p className="text-xl font-bold">Превью</p>
-      <NewsCard news={{ ...news, id: '-1' }} image="news-image-preview" />
+      <NewsCard news={news} isPreview={true} />
     </div>
   );
 }

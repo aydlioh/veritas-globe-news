@@ -2,14 +2,15 @@
 
 import ReactMarkdown from 'react-markdown';
 import Image from 'next/image';
-import { useNewsDetail } from '../api/useNewsDetail';
+
 import { useParams } from 'next/navigation';
+import { useNewsById } from '../../news-list/api/useNewsByID';
 
 export const NewsDetailContent = () => {
   const params = useParams();
   const newsId = params.id as string;
 
-  const { news, error, isLoading } = useNewsDetail(newsId);
+  const { data: news, error, isLoading } = useNewsById(newsId);
 
   if (isLoading) {
     return <p>loading...</p>;
@@ -27,12 +28,14 @@ export const NewsDetailContent = () => {
     <div className="flex flex-col gap-4 max-w-[800px] mx-auto">
       <h1 className="text-3xl font-bold">{news.title}</h1>
 
-      <div className="text-gray-500 text-sm">{news.date}</div>
+      <div className="text-gray-500 text-sm">
+        {new Date(news.createdAt).toLocaleDateString()}
+      </div>
 
-      {news.image && (
+      {news.previewUrl && (
         <div className="mb-6 rounded-lg">
           <Image
-            src={news.image}
+            src={news.previewUrl}
             alt={news.title}
             width={800}
             height={450}
