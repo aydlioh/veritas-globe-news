@@ -1,11 +1,5 @@
-'use client';
-
-import {
-  Dialog,
-  DialogContent,
-  DialogHeader,
-  DialogTitle,
-} from '@/shared/ui/dialog';
+import { Dialog, DialogContent, DialogTitle } from '@/shared/ui/dialog';
+import { cn } from '../lib/utils';
 
 interface ModalProps {
   open: boolean;
@@ -20,7 +14,7 @@ export const Modal = ({
   onOpenChange,
   children,
   className = '',
-  title,
+  title = 'Модальное окно', // значение по умолчанию
 }: ModalProps) => {
   const handleContentClick = (e: React.MouseEvent) => {
     e.stopPropagation();
@@ -29,15 +23,16 @@ export const Modal = ({
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent
-        className={`reltive p-6 rounded-xl w-[400px] ${className}`}
+        className={cn(
+          'fixed top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%] z-50',
+          'p-6 w-[400px] rounded-xl bg-white shadow-lg',
+          className,
+        )}
         onClick={handleContentClick}
       >
+        <DialogTitle className="sr-only">{title}</DialogTitle>
         {children}
       </DialogContent>
-
-      <DialogHeader>
-        <DialogTitle>{title ? title : ''}</DialogTitle>
-      </DialogHeader>
     </Dialog>
   );
 };
